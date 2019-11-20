@@ -1,4 +1,7 @@
 # Project-3-flask-issue-api
+
+![wireframe](/images/P3_Wireframe.png)
+
 ## Flask API for Project 3 - Issue Tracking 
 
 ### User Experience
