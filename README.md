@@ -5,11 +5,11 @@
 
   * User lands on a home page, where user the option to Signs Up or Log In
   *	If the User clicks “Sign Up,” the User lands on a page where the user can enter:
-o	Name
-o	Department
-o	Email
-o	Password
-•	After signing up, the User lands on the “Create Issues” page.  On that page, the User can enter the following:
+  *   o	Name
+  *   o	Department
+  *   o	Email
+  *   o	Password
+  * After signing up, the User lands on the “Create Issues” page.  On that page, the User can enter the following:
 o	Subject
 o	Date (pre-populated)
 o	Click on “Create New” or “See All Issues”
