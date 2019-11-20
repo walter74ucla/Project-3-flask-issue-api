@@ -4,7 +4,7 @@
 ### User Experience
 
   * User lands on a home page, where user the option to Signs Up or Log In
-•	If the User clicks “Sign Up,” the User lands on a page where the user can enter:
+  *	If the User clicks “Sign Up,” the User lands on a page where the user can enter:
 o	Name
 o	Department
 o	Email
