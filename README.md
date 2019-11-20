@@ -18,10 +18,10 @@
      - Users can delete their comments
   *	On the Issues List page, a User can Edit, Delete, or click the Resolved button
      -	The User can only do this on the issues they created
-
-•	Stretch Goals
-o	Create Admin capability
-o	Email Notification on Create New Issue and after Admin add a potential solution
-o	Add attachments to the “Create Issues” submission
-o	Add Reply 
-o	Add edit capability to the Comments
+     
+  * Stretch Goals
+     -	Create Admin capability
+     - Email Notification on Create New Issue and after Admin add a potential solution
+     -	Add attachments to the “Create Issues” submission
+     -	Add Reply
+     -	Add edit capability to the Comments
