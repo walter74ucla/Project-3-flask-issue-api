@@ -1,6 +1,8 @@
 from flask import Flask, g
 from flask_cors import CORS
+from flask_login import LoginManager
 from resources.issues import issue
+from resources.users import user
 import models
 
 
@@ -11,6 +13,19 @@ PORT = 8000
 #Initialize an instance of the flask class
 #This starts the website!
 app = Flask(__name__)
+
+app.secret_key = "WEFGLBEQWF" ##Need this to encode the session
+login_manager = LoginManager()#sets up the ability to set up the session
+login_manager.init_app(app)
+
+#Decorator that will load the user object whenever we access the session
+# by import current_user from flask_login
+@login_manager.user_loader 
+def load_user(user_id):
+    try:
+        return models.User.get(models.User.id == user_id)
+    except models.DoesNotExist:
+        return None
 
 @app.before_request
 def before_request():
@@ -34,8 +49,10 @@ def index():
 
 
 CORS(issue, origins=['http://localhost:3000'], supports_credentials=True)
-
 app.register_blueprint(issue, url_prefix='/api/v1/issues')
+
+CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
+app.register_blueprint(user, url_prefix='/api/v1/users')
 
 
 #Run the app when the program starts
