@@ -69,5 +69,6 @@ def update_issue(id):
 def delete_issue(id):
     query = models.Issue.delete().where(models.Issue.id==id)
     query.execute()
-    return jsonify(data='resource successfully deleted', status="code": 200, "message": "resource deleted successfully" )
+    return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
+    
 
