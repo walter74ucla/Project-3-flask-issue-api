@@ -40,3 +40,28 @@ def register():
         # delete the password before sending user dict back to the client/browser
         del user_dict['password']
         return jsonify(data=user_dict, status={'code': 201, 'message': 'User created'})
+
+@user.route('/login', methods=["POST"])
+def login():
+    """ 
+    Route to authenticate user by comparing pw hash from DB
+    to the hashed password attempt sent from client/user.
+    Requires: Email, password
+    """
+    payload = request.get_json()
+
+    #error_msg = "Email or password is incorrect"
+    try:
+        user = models.User.get(models.User.email ** payload['email'])
+        user_dict = model_to_dict(user)
+        # check_password_hash(<hash_password>, <plaintext_pw_to_compare>)
+        if (check_password_hash(user_dict['password'], payload['password'])):
+            del user_dict['password']
+            login_user(user) # Setup for the session
+            print('User is:', user)
+            return jsonify(data=user_dict, status={'code': 200, 'message': 'User authenticated'})
+
+        return jsonify(data={}, status={'code': 401, 'message': 'Email or password is incorrect'})
+    
+    except models.DoesNotExist:
+        return jsonify(data={}, status={'code': 401, 'message': 'Email or password is incorrect'})
