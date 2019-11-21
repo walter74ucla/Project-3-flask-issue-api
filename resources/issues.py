@@ -36,7 +36,7 @@ def create_issues():
     return jsonify(data=issue_dict, status={"code": 201, "message": "Success"})
 
 
-# Show Route (get)
+# Show/Read Route (get)
 @issue.route('/<id>', methods=["GET"])
 def get_one_issue(id):
     print(id, 'reserved word?')
