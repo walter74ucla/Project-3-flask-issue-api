@@ -4,16 +4,6 @@ from flask_login import UserMixin
 
 DATABASE = SqliteDatabase('issues.sqlite')
 
-
-class Issue(Model):
-	subject = CharField()
-	created_at = DateTimeField(default= datetime.datetime.now)
-
-	class Meta:
-		db_table = 'issues'
-		database = DATABASE
-
-
 class User(UserMixin, Model):
 	name = CharField()
 	department = CharField()
@@ -30,9 +20,19 @@ class User(UserMixin, Model):
 		db_table = 'users'
 		database = DATABASE
 
+class Issue(Model):
+	subject = CharField()
+	created_at = DateTimeField(default= datetime.datetime.now)
+	user = ForeignKeyField(User, related_name='issues')
+	class Meta:
+		db_table = 'issues'
+		database = DATABASE
+
+
+
 
 class Comment(Model):
-	issue = ForeignKeyField(User, related_name='comments') #represents one to many OR
+	issue = ForeignKeyField(Issue, related_name='comments') #represents one to many OR
 															#backref = 'comments'
 	class Meta:
 		db_table = 'comments'
