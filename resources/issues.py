@@ -77,6 +77,7 @@ def create_issues():
 # Show/Read Route (get)
 @issue.route('/<issue_id>', methods=["GET"])
 def get_one_issue(id):
+    # print(id)
     try:
         # Try to find issue with a certain id
         issue = model_to_dict(models.Issue.get(id=issue_id, max_depth=0))
