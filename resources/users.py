@@ -1,3 +1,4 @@
+#resources folder is like controllers
 import models
 
 from flask import request, jsonify, Blueprint
