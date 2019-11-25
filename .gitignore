@@ -21,4 +21,7 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
+
 *.sqlite
+
+

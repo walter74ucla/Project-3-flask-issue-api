@@ -1,10 +1,18 @@
+import os ##new for heroku
 import datetime
 from peewee import *
 from flask_login import UserMixin
+from playhouse.db_url import connect
 
-DATABASE = SqliteDatabase('issues.sqlite')
 
-class User(UserMixin, Model):
+if 'ON_HEROKU' in os.environ:
+    DATABASE = connect(os.environ.get('DATABASE_URL')) 
+
+else:
+	DATABASE = SqliteDatabase('issues.sqlite')
+
+
+class User(UserMixin, Model): #User must come before Issue or you get a "NameError: name 'User' is not defined"
 	name = CharField()
 	department = CharField()
 	email = CharField(unique=True)
@@ -31,14 +39,23 @@ class Issue(Model):
 
 
 
+class Issue(Model):
+	subject = CharField()
+	created_at = DateTimeField(default= datetime.datetime.now)
+	# added created_by to relate an issue to the person creating the issue
+	created_by = ForeignKeyField(User, backref='issues')# Represents One-to-Many
+
+	class Meta:
+		db_table = 'issues'
+		database = DATABASE
+
+
 class Comment(Model):
 	issue = ForeignKeyField(Issue, related_name='comments') #represents one to many OR
 															#backref = 'comments'
 	class Meta:
 		db_table = 'comments'
 		database = DATABASE
-
-
 
 
 
