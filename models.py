@@ -31,7 +31,7 @@ class User(UserMixin, Model): #User must come before Issue or you get a "NameErr
 
 class Issue(Model):
 	subject = CharField()
-	created_at = DateTimeField(default= datetime.datetime.now)
+	created_at = DateTimeField(default= datetime.date.today())
 	# added created_by to relate an issue to the person creating the issue
 	created_by = ForeignKeyField(User, backref='issues')# Represents One-to-Many
 
@@ -41,7 +41,7 @@ class Issue(Model):
 
 
 class Comment(Model):
-	issue = ForeignKeyField(User, related_name='comments') #represents one to many OR
+	issue = ForeignKeyField(Issue, related_name='comments') #represents one to many OR
 															#backref = 'comments'
 	class Meta:
 		db_table = 'comments'

@@ -20,16 +20,20 @@ def get_all_issues():
     # print(request.cookies)
     ## find the issues and change each one to a dictionary into a new array
     
-    print('Current User:',  current_user)
+    print('Current User:',  current_user, "line 23", '\n')
     # Send all issues back to client. There is no valid reason for this not to work
     # so we don't use a try -> except.
     # IMPORTANT -> Use max_depth=0 if we want just the issue created_by id and not the entire
     # created_by object sent back to the client. 
     # Could also use exclude=[models.Issue.created_by] to entirely remove ref to created_by
     # http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#model_to_dict
-    all_issues = [model_to_dict(d, max_depth=0) for d in models.Issue.select()]
-    return jsonify(data=all_issues, status={'code': 200, 'message': 'Success'})
+    # all_issues = [model_to_dict(d, max_depth=0) for d in models.Issue.select()]
 
+    # we want the entire object, so we are not going to use max_depth=0
+    all_issues = [model_to_dict(issue) for issue in models.Issue.select()]
+
+    print(all_issues, 'line 31', '\n')
+    return jsonify(data=all_issues, status={'code': 200, 'message': 'Success'})
 
     ######################################################################
     # old way of doing it before adding authorization...
@@ -59,15 +63,15 @@ def create_issues():
     payload['created_by'] = current_user.id # Set the 'created_by' of the issue to the current user
     print(payload['created_by'], 'created by current user id')
     #######################################################################
-
+    print(payload, 'line 63')
     issue = models.Issue.create(**payload) ## ** spread operator
     # returns the id, see print(issue)
 
     ## see the object
     # print(issue)
-    print(issue.__dict__)
+    # print(issue.__dict__)
     ## Look at all the methods
-    print(dir(issue))
+    # print(dir(issue))
     # Change the model to a dict
     print(model_to_dict(issue), 'model to dict')
     issue_dict = model_to_dict(issue)
@@ -106,7 +110,7 @@ def update_issue(id):
     # if we try to get an id that doesn't exist a 500 error will occur. Would 
     # send back a 404 error because the 'issue' resource wasn't found.
     issue_to_update = models.Issue.get(id=id)
-
+    print(issue_to_update, "line113")
     if not current_user.is_authenticated: # Checks if user is logged in
         return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to edit an issue'})
 
@@ -116,14 +120,21 @@ def update_issue(id):
         return jsonify(data={}, status={'code': 401, 'message': 'You can only update an issue you created'})
 
     # Given our form, we only want to update the subject of our issue
-    issue_to_update.update(
-        subject=payload['subject']
-    ).execute()
+    # issue_to_update.update(
+    #     subject=payload['subject']
+    # ).execute()
+
+    #new code
+    issue_to_update.subject = payload['subject']
+    issue_to_update.save()
 
     # Get a dictionary of the updated issue to send back to the client.
     # Use max_depth=0 because we want just the created_by id and not the entire
     # created_by object sent back to the client. 
-    update_issue_dict = model_to_dict(issue_to_update, max_depth=0)
+    # update_issue_dict = model_to_dict(issue_to_update, max_depth=0)
+
+    # we want the entire object, so we are not going to use max_depth=0
+    update_issue_dict = model_to_dict(issue_to_update)
     return jsonify(status={'code': 200, 'msg': 'success'}, data=update_issue_dict)    
 
     #######################################################################
@@ -151,7 +162,8 @@ def delete_issue(id):
     # if we try to get an id that doesn't exist a 500 error will occur. Would 
     # send back a 404 error because the 'issue' resource wasn't found.
     issue_to_delete = models.Issue.get(id=id)
-
+    print(issue_to_delete, 'line 161');
+    print(current_user, 'line 162');
     if not current_user.is_authenticated: # Checks if user is logged in
         return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to create an issue'})
     if issue_to_delete.created_by.id is not current_user.id: 
@@ -160,7 +172,9 @@ def delete_issue(id):
         return jsonify(data={}, status={'code': 401, 'message': 'You can only delete the issue you created'})
     
     # Delete the issue and send success response back to user
-    issue_to_delete.delete()
+    query = models.Issue.delete().where(models.Issue.id==id)
+    query.execute()
+    print(issue_to_delete, 'line 174');
     return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
 
     #######################################################################
