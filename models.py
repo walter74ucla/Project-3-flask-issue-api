@@ -41,7 +41,7 @@ class Issue(Model):
 
 
 class Comment(Model):
-	issue = ForeignKeyField(Issue, related_name='comments') #represents one to many OR
+	issue = ForeignKeyField(Issue, backref='comments') #represents one to many OR
 															#backref = 'comments'
 	class Meta:
 		db_table = 'comments'
