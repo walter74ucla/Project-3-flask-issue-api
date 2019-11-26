@@ -79,22 +79,25 @@ def create_issues():
 
 
 # Show/Read Route (get)
-@issue.route('/<issue_id>', methods=["GET"])
+@issue.route('/<id>/', methods=["GET"])
 def get_one_issue(id):
-    try:
-        # Try to find issue with a certain id
-        issue = model_to_dict(models.Issue.get(id=issue_id, max_depth=0))
-        return jsonify(issue)
-    except models.DoesNotExist:
-        # If the id does not match an id of an issue in the database return 404 error
-        return jsonify(data={}, status={'code': 404, 'message': 'Issue not found'})
+    #######################################################################
+    # This way did no work for me...
+    # try:
+    #     # Try to find issue with a certain id
+    #     issue = model_to_dict(models.Issue.get(id=issue_id, max_depth=0))
+    #     return jsonify(issue)
+    # except models.DoesNotExist:
+    #     # If the id does not match an id of an issue in the database return 404 error
+    #     return jsonify(data={}, status={'code': 404, 'message': 'Issue not found'})
+    #######################################################################
 
     #######################################################################
     # old way of doing it before adding authorization...
-    # print(id, 'reserved word?')
-    # issue = models.Issue.get_by_id(id)
-    # print(issue.__dict__)
-    # return jsonify(data=model_to_dict(issue), status={"code": 200, "message": "Success"})
+    print(id, 'reserved word?')
+    issue = models.Issue.get_by_id(id)
+    print(issue.__dict__)
+    return jsonify(data=model_to_dict(issue), status={"code": 200, "message": "Success"})
     #######################################################################
 
 # Update/Edit Route (put)

@@ -31,7 +31,7 @@ class User(UserMixin, Model): #User must come before Issue or you get a "NameErr
 
 class Issue(Model):
 	subject = CharField()
-	created_at = DateTimeField(default= datetime.date.today())
+	created_at = DateTimeField(default=datetime.datetime.now)
 	# added created_by to relate an issue to the person creating the issue
 	created_by = ForeignKeyField(User, backref='issues')# Represents One-to-Many
 
