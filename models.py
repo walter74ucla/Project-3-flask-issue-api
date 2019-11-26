@@ -28,20 +28,10 @@ class User(UserMixin, Model): #User must come before Issue or you get a "NameErr
 		db_table = 'users'
 		database = DATABASE
 
-class Issue(Model):
-	subject = CharField()
-	created_at = DateTimeField(default= datetime.datetime.now)
-	user = ForeignKeyField(User, related_name='issues')
-	class Meta:
-		db_table = 'issues'
-		database = DATABASE
-
-
-
 
 class Issue(Model):
 	subject = CharField()
-	created_at = DateTimeField(default= datetime.datetime.now)
+	created_at = DateTimeField(default= datetime.date.today())
 	# added created_by to relate an issue to the person creating the issue
 	created_by = ForeignKeyField(User, backref='issues')# Represents One-to-Many
 
