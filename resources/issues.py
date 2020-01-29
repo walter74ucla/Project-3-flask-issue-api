@@ -107,6 +107,7 @@ def get_one_issue(id):
     # return jsonify(data=model_to_dict(issue), status={"code": 200, "message": "Success"})
     #######################################################################
 
+
 # Update/Edit Route (put)
 @issue.route('/<id>/', methods=["PUT"])
 def update_issue(id):
@@ -163,6 +164,7 @@ def update_issue(id):
     # # print(updated_issue, type(update_issue))
     # return jsonify(data=issue_dict, status={"code": 200, "message": "resource updated successfully"})
     #######################################################################
+
 
 # Delete Route (delete)
 @issue.route('/<id>/', methods=["DELETE"])
