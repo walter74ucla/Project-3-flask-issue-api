@@ -82,9 +82,9 @@ def create_issues():
 @issue.route('/<id>/', methods=["GET"]) # <id> is the params (:id in express)
 def get_one_issue(id):
     print(id)
-    # Get the dog we are trying to update. Could put in try -> except because
+    # Get the issue we are trying to update. Could put in try -> except because
     # if we try to get an id that doesn't exist a 500 error will occur. Would 
-    # send back a 404 error because the 'dog' resource wasn't found.
+    # send back a 404 error because the 'issue' resource wasn't found.
     one_issue = models.Issue.get(id=id)
 
     if not current_user.is_authenticated: # Checks if user is logged in
@@ -95,19 +95,10 @@ def get_one_issue(id):
         # If the ids don't match send 401 - unauthorized back to user
         return jsonify(data={}, status={'code': 401, 'message': 'You can only update an issue you created'})
 
-
-# Show/Read Route (get)
-# @issue.route('/<issue_id>', methods=["GET"])
-# def get_one_issue(id):
-#     # print(id)
-#     try:
-#         # Try to find issue with a certain id
-#         issue = model_to_dict(models.Issue.get(id=issue_id, max_depth=0))
-#         return jsonify(issue) #this way does not give a status message
-#     except models.DoesNotExist:
-#         # If the id does not match an id of an issue in the database return 404 error
-#         return jsonify(data={}, status={'code': 404, 'message': 'Issue not found'})
-
+    return jsonify(
+                data=model_to_dict(one_issue), 
+                status={'code': 200, 'message': 'You can update an issue you created'}
+            )
     #######################################################################
     # old way of doing it before adding authorization...
     # print(id, 'reserved word?')
@@ -115,6 +106,7 @@ def get_one_issue(id):
     # print(issue.__dict__)
     # return jsonify(data=model_to_dict(issue), status={"code": 200, "message": "Success"})
     #######################################################################
+
 
 # Update/Edit Route (put)
 @issue.route('/<id>/', methods=["PUT"])
@@ -128,7 +120,7 @@ def update_issue(id):
     # if we try to get an id that doesn't exist a 500 error will occur. Would 
     # send back a 404 error because the 'issue' resource wasn't found.
     issue_to_update = models.Issue.get(id=id)
-    print(issue_to_update, "line113")
+    print(issue_to_update, "line122")
     if not current_user.is_authenticated: # Checks if user is logged in
         return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to edit an issue'})
 
@@ -172,6 +164,7 @@ def update_issue(id):
     # # print(updated_issue, type(update_issue))
     # return jsonify(data=issue_dict, status={"code": 200, "message": "resource updated successfully"})
     #######################################################################
+
 
 # Delete Route (delete)
 @issue.route('/<id>/', methods=["DELETE"])
