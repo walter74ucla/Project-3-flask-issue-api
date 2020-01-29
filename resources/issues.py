@@ -202,3 +202,4 @@ def delete_issue(id):
     # return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
     #######################################################################
 
+
