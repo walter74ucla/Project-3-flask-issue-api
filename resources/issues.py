@@ -32,7 +32,7 @@ def get_all_issues():
     # we want the entire object, so we are not going to use max_depth=0
     all_issues = [model_to_dict(issue) for issue in models.Issue.select()]
 
-    print(all_issues, 'line 31', '\n')
+    print(all_issues, 'line 35', '\n')
     return jsonify(data=all_issues, status={'code': 200, 'message': 'Success'})
 
     ######################################################################
