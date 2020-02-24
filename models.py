@@ -48,6 +48,8 @@ class Comment(Model):
 	# added created_by to relate a comment to the person creating the comment
 	created_by = ForeignKeyField(User, backref='comments')# Represents One-to-Many
 	assoc_issue_id = IntegerField()
+	# test = CharField()
+
 
 	class Meta:
 		db_table = 'comments'
