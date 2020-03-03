@@ -33,7 +33,7 @@ class User(UserMixin, Model): #User must come before Issue or you get a "NameErr
 
 class Issue(Model):
 	subject = CharField()
-	created_at = DateTimeField(default=datetime.datetime.now)
+	created_at = DateTimeField(default=datetime.datetime.utcnow)
 	# added created_by to relate an issue to the person creating the issue
 	created_by = ForeignKeyField(User, backref='issues')# Represents One-to-Many
 
@@ -44,7 +44,7 @@ class Issue(Model):
 
 class Comment(Model):
 	body = CharField()
-	created_at = DateTimeField(default=datetime.datetime.now)
+	created_at = DateTimeField(default=datetime.datetime.utcnow)
 	# added created_by to relate a comment to the person creating the comment
 	created_by = ForeignKeyField(User, backref='comments')# Represents One-to-Many
 	assoc_issue_id = IntegerField()
