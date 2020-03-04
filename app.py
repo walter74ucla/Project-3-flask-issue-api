@@ -50,13 +50,13 @@ def index():
 	return 'hi'
 
 
-CORS(issue, origins=['http://localhost:3000', 'https://project-3-react-issue-client.herokuapp.com/', 'https://fast-lake-95373-2.herokuapp.com', 'https://walter-react-issue-client.herokuapp.com'], supports_credentials=True)
+CORS(issue, origins=['http://localhost:3000', 'https://project-3-react-issue-client.herokuapp.com', 'https://fast-lake-95373-2.herokuapp.com', 'https://walter-react-issue-client.herokuapp.com'], supports_credentials=True)
 app.register_blueprint(issue, url_prefix='/api/v1/issues')
 
-CORS(user, origins=['http://localhost:3000', 'https://project-3-react-issue-client.herokuapp.com/', 'https://fast-lake-95373-2.herokuapp.com', 'https://walter-react-issue-client.herokuapp.com'], supports_credentials=True)
+CORS(user, origins=['http://localhost:3000', 'https://project-3-react-issue-client.herokuapp.com', 'https://fast-lake-95373-2.herokuapp.com', 'https://walter-react-issue-client.herokuapp.com'], supports_credentials=True)
 app.register_blueprint(user, url_prefix='/api/v1/users')
 
-CORS(comment, origins=['http://localhost:3000', 'https://project-3-react-issue-client.herokuapp.com/', 'https://fast-lake-95373-2.herokuapp.com', 'https://walter-react-issue-client.herokuapp.com'], supports_credentials=True)
+CORS(comment, origins=['http://localhost:3000', 'https://project-3-react-issue-client.herokuapp.com', 'https://fast-lake-95373-2.herokuapp.com', 'https://walter-react-issue-client.herokuapp.com'], supports_credentials=True)
 app.register_blueprint(comment, url_prefix='/api/v1/comments')
 
 
